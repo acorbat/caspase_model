@@ -26,9 +26,11 @@ def add_biosensors():
                 sl=1, bf=None),
             sensor_ini[sensor])
 
-    sensor_cleavers = {'BFP': (C3(state='A'), (1e-6, 1e-2, 1)),
-                       'Cit': (Apop(bf=None), (5e-9, 1e-3, 1)),
-                       'mKate': (C8(state='A'), (1e-7, 1e-3, 1))}
+    # Forward rates have been halfed because there are two binding sites for
+    # enzymes and this causes the rate to be doubled.
+    sensor_cleavers = {'BFP': (C3(state='A'), (1e-6 / 2, 1e-2, 1)),
+                       'Cit': (Apop(bf=None), (5e-9 / 2, 1e-3, 1)),
+                       'mKate': (C8(state='A'), (1e-7 / 2, 1e-3, 1))}
 
     for sensor in sensors:
         dimer = sensors_monomer[sensor](sl=1, bf=None) % sensors_monomer[
