@@ -10,5 +10,5 @@ setup(
     author_email='acorbat@df.uba.ar',
     description='Caspase model modified at Grecco Lab.',
     install_requires=['pysb'],
-    dependency_links=['https://github.com/sorgerlab/earm.git']
+    dependency_links=['https://github.com/acorbat/earm.git']
 )
