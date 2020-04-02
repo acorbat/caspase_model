@@ -3,9 +3,21 @@ from pysb.macros import *
 from pysb.util import alias_model_components
 from .shared import add_biosensors
 
+
 def albeck_as_matlab():
     """Loads model as stated in Albeck's 2008 paper."""
-    from earm.albeck_11f import model
+    from earm import albeck_modules
+    model = Model()
+
+    # Declare monomers
+    albeck_modules.all_monomers()
+
+    # Generate the upstream and downstream sections
+    albeck_modules.rec_to_bid()
+    albeck_modules.pore_to_parp()
+
+    # The specific MOMP model to use
+    albeck_modules.albeck_11e()
 
     # Add citoplasmic Bcl2 as it was in Albeck's model because it's absent in
     # EARM implementation.
@@ -32,4 +44,4 @@ def corbat_2018():
     L_0.value = 1e3
     R_0.value = 1e3
 
-    
+    return model
