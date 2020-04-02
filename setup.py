@@ -10,5 +10,5 @@ setup(
     author_email='acorbat@df.uba.ar',
     description='Caspase model modified at Grecco Lab.',
     install_requires=['pysb',
-                      'earm @ git+ssh://git@github.com/acorbat/earm@v1.0#egg=earm']
+                      'earm @ git+https://github.com/acorbat/earm/tarball/master#egg=package-1.0']
 )
