@@ -48,4 +48,4 @@ def observe_biosensors():
         Observable(sensor_name + '_monomer', sensor(sl=None, bf=None))
         Observable(sensor_name + '_dimer',
                    sensor(sl=1, bf=None) % sensor(sl=1, bf=None),
-                   mach='species')
+                   match='species')
