@@ -35,3 +35,15 @@ def add_biosensors():
             sensor](sl=1, bf=None)
         cleave_dimer(sensor_cleavers[sensor][0], 'bf', dimer, 'bf', 'sl',
                      sensor_cleavers[sensor][1])
+
+
+def observe_biosensors():
+    """Add biosensors in monomeric and dimeric state as observables."""
+    alias_model_components()
+    sensor_dict = {'BFP': BFP,
+                   'Cit': Cit,
+                   'mKate': mKate}
+
+    for sensor_name, sensor in sensor_dict.items():
+        Observable(sensor_name + '_monomer', sensor(sl=None, bf=None))
+        Observable(sensor_name + '_dimer', sensor(sl=1, bf=None) % sensor(sl=1, bf=None))
