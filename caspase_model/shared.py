@@ -26,7 +26,7 @@ def add_biosensors():
                 sl=1, bf=None),
             sensor_ini[sensor])
 
-    # Forward rates have been halfed because there are two binding sites for
+    # Forward rates have been halved because there are two binding sites for
     # enzymes and this causes the rate to be doubled.
     sensor_cleavers = {'BFP': (C3(state='A'), (1e-6 / 2, 1e-2, 1)),
                        'Cit': (Apop(bf=None), (5e-9 / 2, 1e-3, 1)),
