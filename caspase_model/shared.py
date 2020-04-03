@@ -1,4 +1,5 @@
 from pysb import *
+from pysb.macros import *
 from pysb.util import alias_model_components
 from .macros import cleave_dimer
 
@@ -51,3 +52,32 @@ def observe_biosensors():
         Observable(sensor_name + '_dimer',
                    sensor(sl=1, bf=None) % sensor(sl=1, bf=None),
                    match='species')
+
+
+def remove_extrinsic_stimuli(model):
+    """Sets ligand to 0 to remove extrinsic stimuli."""
+    model.parameters['L_0'].value = 0
+
+
+def intrinsic_stimuli(model=None):
+    """Add instrinsic stimuli activation through Bid truncation. If model is
+    given, then extrinsic activation is removed from it."""
+
+    Monomer('IntrinsicStimuli', ['bf'])
+    Parameter('IntrinsicStimuli_0', 1e3)
+
+    alias_model_components()
+
+    Initial(IntrinsicStimuli(bf=None), IntrinsicStimuli_0)
+
+    # =====================
+    # tBid Intrinsic Activation Rules
+    # ---------------------
+    #        Bid + IntrinsicStimuli <--> Bid:IS --> tBid + IS
+    # ---------------------
+    catalyze(IntrinsicStimuli(bf=None), 'bf',  Bid(state='U'), 'bf',
+             Bid(state='T'), [1e-6, 1e-3, 1])
+
+    if model:
+        # Remove extrinsic stimuli
+        remove_extrinsic_stimuli(model)

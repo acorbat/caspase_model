@@ -1,7 +1,7 @@
 from pysb import *
 from pysb.macros import *
 from pysb.util import alias_model_components
-from .shared import add_biosensors
+from .shared import add_biosensors, intrinsic_stimuli
 
 
 def albeck_as_matlab():
@@ -45,3 +45,17 @@ def corbat_2018():
     R_0.value = 1e3
 
     return model
+
+
+def arm(stimuli='extrinsic'):
+    """Returns the new apoptotic reaction model. stimuli can be extrinsic
+    (default) or intrinsic."""
+
+    model = corbat_2018()
+
+    if stimuli is 'intrinsic':
+        return intrinsic_stimuli(model)
+    elif stimuli is 'extrinsic':
+        return model
+    else:
+        raise ValueError('ARM stimuli can be either extrinsic or intrinsic.')
