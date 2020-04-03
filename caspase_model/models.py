@@ -54,7 +54,8 @@ def arm(stimuli='extrinsic'):
     model = corbat_2018()
 
     if stimuli is 'intrinsic':
-        return intrinsic_stimuli(model)
+        intrinsic_stimuli(model)
+        return model
     elif stimuli is 'extrinsic':
         return model
     else:
