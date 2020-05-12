@@ -32,6 +32,8 @@ def albeck_as_matlab():
     # There is another discrepancy in C8A and Bid kf
     model.parameters['bind_C8A_BidU_to_C8ABidU_kf'].value = 1e-7
 
+    return model
+
 
 def corbat_2018():
     """EARM model as modified by Corbat et al. (2018)."""
