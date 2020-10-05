@@ -86,10 +86,10 @@ def intrinsic_stimuli(model=None):
 def choose_stimuli(model, stimuli):
     """Adapts the model to the corresponding stimuli, checking that intrinsic
     (modify model) and extrinsic are the only possibilities."""
-    if stimuli is 'intrinsic':
+    if stimuli == 'intrinsic':
         intrinsic_stimuli(model)
         return model
-    elif stimuli is 'extrinsic':
+    elif stimuli == 'extrinsic':
         return model
     else:
         raise ValueError('Stimuli can be either extrinsic or intrinsic.')
