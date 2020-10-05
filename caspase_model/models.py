@@ -38,7 +38,7 @@ def albeck_as_matlab():
 
 def corbat_2018(stimuli='extrinsic'):
     """EARM model as modified by Corbat et al. (2018)."""
-    albeck_as_matlab()
+    model = albeck_as_matlab()
     add_biosensors()
 
     alias_model_components()
