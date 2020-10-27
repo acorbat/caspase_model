@@ -40,6 +40,14 @@ def add_biosensors():
                      sensor_cleavers[sensor][1])
 
 
+def add_apaf_biosensor_cleavage():
+    """In double apoptosome activation we need the first activation of apaf to
+    cleave biosensor for cas9 at a slower rate."""
+    klist = [2e-9, 1e-3, 1]
+    dimer = Cit(sl=1, bf=None) % Cit(sl=1, bf=None)
+    cleave_dimer(Apaf(state='A'), 'bf', dimer, 'bf', 'sl', klist)
+
+
 def observe_biosensors():
     """Add biosensors in monomeric and dimeric state as observables."""
     alias_model_components()
