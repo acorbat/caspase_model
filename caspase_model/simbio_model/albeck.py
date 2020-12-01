@@ -30,11 +30,11 @@ class Base(Compartment):
         M = Species(0)
 
     class Bax(Compartment):
-        C = Species(0)
+        C = Species(1e5)
         M = Species(0)
         A = Species(0)
 
-    Bcl2 = Species(0)
+    Bcl2 = Species(2e4)
 
     class CytoC(Compartment):
         C = Species(0)
@@ -247,11 +247,6 @@ class Albeck11b(Base):
     class Bid(Base.Bid):
         U = Species(1e5, override=True)
 
-    class Bax(Base.Bax):
-        C = Species(1e5, override=True)
-
-    Bcl2 = Species(2e4, override=True)
-
     def add_reactions(self):
         yield MichaelisMenten(
             self.Bid.T,
@@ -308,8 +303,6 @@ class Albeck11c(Base):
         U = Species(4e4, override=True)
 
     class Bax(Base.Bax):
-        C = Species(1e5, override=True)
-
         A2 = Species(0)
         A4 = Species(0)
 
@@ -320,8 +313,6 @@ class Albeck11c(Base):
             # Bax dimerizes/tetramerizes
             yield Equilibration(2 * self.A, self.A2, self.KF, self.KR)
             yield Equilibration(2 * self.A2, self.A4, self.KF, self.KR)
-
-    Bcl2 = Species(2e4, override=True)
 
     def add_reactions(self):
         yield MichaelisMenten(
@@ -382,8 +373,6 @@ class Albeck11d(Base):
         U = Species(4e4, override=True)
 
     class Bax(Base.Bax):
-        C = Species(1e5, override=True)
-
         M2 = Species(0)
         M4 = Species(0)
 
@@ -403,8 +392,6 @@ class Albeck11d(Base):
             # Bax dimerizes/tetramerizes
             yield Equilibration(2 * self.M, self.M2, self.KF, self.KR)
             yield Equilibration(2 * self.M2, self.M4, self.KF, self.KR)
-
-    Bcl2 = Species(2e4, override=True)
 
     def add_reactions(self):
         yield MichaelisMenten(
