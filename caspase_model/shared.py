@@ -73,7 +73,7 @@ def intrinsic_stimuli(model=None):
     given, then extrinsic activation is removed from it."""
 
     Monomer('IntrinsicStimuli', ['bf'])
-    Parameter('IntrinsicStimuli_0', 1e3)
+    Parameter('IntrinsicStimuli_0', 1e2)
 
     alias_model_components()
 
