@@ -112,7 +112,7 @@ def arm(stimuli='extrinsic', add_CASPAM=True):
     model.parameters['Apaf_0'].value = 1e3
     model.parameters['CytoC_0'].value = 1e5
     model.parameters['bind_CitCit_ApafA_kf'].value = 2e-10
-    model.parameters['bind_C3A_ApafA_to_C3AApafA_kf'].value = 3.3e-06
+    model.parameters['bind_C3A_ApafA_to_C3AApafA_kf'].value = 1.3e-06
     model.parameters['bind_ApafA_C3pro_to_ApafAC3pro_kf'].value = 5e-09
 
     return choose_stimuli(model, stimuli)
