@@ -40,6 +40,15 @@ def add_biosensors():
                      sensor_cleavers[sensor][1])
 
 
+def add_apaf_biosensor_cleavage():
+    """In double apoptosome activation we need the first activation of apaf to
+    cleave biosensor for cas9 at a slower rate."""
+    # We need to halve the forward rate because it has two binding sites
+    klist = [2e-10, 1e-3, 1]
+    dimer = Cit(sl=1, bf=None) % Cit(sl=1, bf=None)
+    cleave_dimer(Apaf(state='A'), 'bf', dimer, 'bf', 'sl', klist)
+
+
 def observe_biosensors():
     """Add biosensors in monomeric and dimeric state as observables."""
     alias_model_components()
@@ -64,7 +73,7 @@ def intrinsic_stimuli(model=None):
     given, then extrinsic activation is removed from it."""
 
     Monomer('IntrinsicStimuli', ['bf'])
-    Parameter('IntrinsicStimuli_0', 1e3)
+    Parameter('IntrinsicStimuli_0', 1e2)
 
     alias_model_components()
 
@@ -81,3 +90,15 @@ def intrinsic_stimuli(model=None):
     if model:
         # Remove extrinsic stimuli
         remove_extrinsic_stimuli(model)
+
+
+def choose_stimuli(model, stimuli):
+    """Adapts the model to the corresponding stimuli, checking that intrinsic
+    (modify model) and extrinsic are the only possibilities."""
+    if stimuli == 'intrinsic':
+        intrinsic_stimuli(model)
+        return model
+    elif stimuli == 'extrinsic':
+        return model
+    else:
+        raise ValueError('Stimuli can be either extrinsic or intrinsic.')
