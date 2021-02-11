@@ -97,24 +97,18 @@ def arm(stimuli='extrinsic', add_CASPAM=True):
         model.parameters['dCit_0'].value = 7.5e5
         model.parameters['dmKate_0'].value = 7.5e5
 
+        model.parameters['bind_BFPBFP_C3A_kf'].value = 2.8e-07
+        model.parameters['bind_mKatemKate_C8A_kf'].value = 5.4e-08
+        model.parameters['bind_CitCit_Apop_kf'].value = 2.8e-07
+
         # Add interaction between single activation
         add_apaf_biosensor_cleavage()
 
     # Other parameters that need to be corrected
     model.parameters['L_0'].value = 1e3
-    model.parameters['XIAP_0'].value = 1e4
     model.parameters['Smac_0'].value = 1e5
-
-    model.parameters['bind_BFPBFP_C3A_kf'].value = 2.8e-07
-    model.parameters['bind_mKatemKate_C8A_kf'].value = 5.4e-08
-    model.parameters['bind_CitCit_Apop_kf'].value = 2.8e-07
-
-    model.parameters['Apaf_0'].value = 1e3
     model.parameters['CytoC_0'].value = 1e5
-    model.parameters['bind_CitCit_ApafA_kf'].value = 2e-10
-    model.parameters['bind_C3A_ApafA_to_C3AApafA_kf'].value = 1.3e-06
-    model.parameters['bind_ApafA_C3pro_to_ApafAC3pro_kf'].value = 5e-09
-
+    
     return choose_stimuli(model, stimuli)
 
 

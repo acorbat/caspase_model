@@ -44,7 +44,7 @@ def add_apaf_biosensor_cleavage():
     """In double apoptosome activation we need the first activation of apaf to
     cleave biosensor for cas9 at a slower rate."""
     # We need to halve the forward rate because it has two binding sites
-    klist = [2e-9 / 2, 1e-3, 1]
+    klist = [2e-10, 1e-3, 1]
     dimer = Cit(sl=1, bf=None) % Cit(sl=1, bf=None)
     cleave_dimer(Apaf(state='A'), 'bf', dimer, 'bf', 'sl', klist)
 

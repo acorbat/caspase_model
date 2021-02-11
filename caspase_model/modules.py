@@ -25,10 +25,10 @@ def pore_to_parp_double_apop():
 
     # Declare initial conditions:
 
-    Parameter('Apaf_0'  , 1.0e5) # Apaf-1
+    Parameter('Apaf_0'  , 1.0e3) # Apaf-1
     Parameter('C3_0'    , 1.0e4) # procaspase-3 (pro-C3)
     Parameter('C6_0'    , 1.0e4) # procaspase-6 (pro-C6)
-    Parameter('XIAP_0'  , 1.0e5) # X-linked inhibitor of apoptosis protein
+    Parameter('XIAP_0'  , 1.0e4) # X-linked inhibitor of apoptosis protein
     Parameter('PARP_0'  , 1.0e6) # C3* substrate
 
     alias_model_components()
@@ -56,8 +56,8 @@ def pore_to_parp_double_apop():
     #   Apop + pC3 <-->  Apop:pC3 --> Apop + C3
 
     catalyze(CytoC(state='A'), Apaf(state='I'), Apaf(state='A'), [5e-7, KR, KC])
-    catalyze(Apaf(state='A'), C3(state='pro'), C3(bf=None, state='A'), [2e-9, KR, KC])
-    catalyze(C3(bf=None, state='A'), Apaf(state='A'), Apop(bf=None), [5e-8, KR, KC])
+    catalyze(Apaf(state='A'), C3(state='pro'), C3(bf=None, state='A'), [5e-09, KR, KC])
+    catalyze(C3(bf=None, state='A'), Apaf(state='A'), Apop(bf=None), [1.3e-06, KR, KC])
     catalyze(Apop(), C3(state='pro'), C3(bf=None, state='A'), [5e-9, KR, KC])
 
     # Apoptosome-related inhibitors
