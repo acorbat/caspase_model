@@ -4,16 +4,16 @@ from pysb.util import alias_model_components
 from .macros import cleave_dimer
 
 
-def add_biosensors():
+def add_biosensors(cc=1e7):
     """Add biosensors monomers to model. All start with an initial
     concentration of 1e7 and the cleaving reactions proposed in the paper by
     Corbat et al. (2018)."""
-    sensors = ['BFP', 'Cit', 'mKate']
+    sensors = ['sCas3', 'sCas8', 'sCas9']
     sensors_monomer = {}
     for sensor in sensors:
         sensors_monomer[sensor] = Monomer(sensor, ['sl', 'bf']) # sl for sensitive linker and es for enzyme site
 
-    sensor_cc = {sensor: 1e7 for sensor in sensors}
+    sensor_cc = {sensor: cc for sensor in sensors}
     sensor_ini = {}
 
     for sensor in sensors:
@@ -29,9 +29,9 @@ def add_biosensors():
 
     # Forward rates have been halved because there are two binding sites for
     # enzymes and this causes the rate to be doubled.
-    sensor_cleavers = {'BFP': (C3(state='A'), (1e-6 / 2, 1e-2, 1)),
-                       'Cit': (Apop(bf=None), (5e-9 / 2, 1e-3, 1)),
-                       'mKate': (C8(state='A'), (1e-7 / 2, 1e-3, 1))}
+    sensor_cleavers = {'sCas3': (C3(state='A'), (1e-6 / 2, 1e-2, 1)),
+                       'sCas9': (Apop(bf=None), (5e-9 / 2, 1e-3, 1)),
+                       'sCas8': (C8(state='A'), (1e-7 / 2, 1e-3, 1))}
 
     for sensor in sensors:
         dimer = sensors_monomer[sensor](sl=1, bf=None) % sensors_monomer[
@@ -45,16 +45,16 @@ def add_apaf_biosensor_cleavage():
     cleave biosensor for cas9 at a slower rate."""
     # We need to halve the forward rate because it has two binding sites
     klist = [2e-10, 1e-3, 1]
-    dimer = Cit(sl=1, bf=None) % Cit(sl=1, bf=None)
+    dimer = sCas9(sl=1, bf=None) % sCas9(sl=1, bf=None)
     cleave_dimer(Apaf(state='A'), 'bf', dimer, 'bf', 'sl', klist)
 
 
 def observe_biosensors():
     """Add biosensors in monomeric and dimeric state as observables."""
     alias_model_components()
-    sensor_dict = {'BFP': BFP,
-                   'Cit': Cit,
-                   'mKate': mKate}
+    sensor_dict = {'sCas3': sCas3,
+                   'sCas8': sCas8,
+                   'sCas9': sCas9}
 
     for sensor_name, sensor in sensor_dict.items():
         Observable(sensor_name + '_monomer', sensor(sl=None, bf=None))

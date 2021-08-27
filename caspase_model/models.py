@@ -93,13 +93,13 @@ def arm(stimuli='extrinsic', add_CASPAM=True):
         # Add biosensors and their perturbation
         add_biosensors()
 
-        model.parameters['dBFP_0'].value = 7.5e5
-        model.parameters['dCit_0'].value = 7.5e5
-        model.parameters['dmKate_0'].value = 7.5e5
+        model.parameters['dsCas3_0'].value = 7.5e5
+        model.parameters['dsCas8_0'].value = 7.5e5
+        model.parameters['dsCas9_0'].value = 7.5e5
 
-        model.parameters['bind_BFPBFP_C3A_kf'].value = 2.8e-07
-        model.parameters['bind_mKatemKate_C8A_kf'].value = 5.4e-08
-        model.parameters['bind_CitCit_Apop_kf'].value = 2.8e-07
+        model.parameters['bind_sCas3sCas3_C3A_kf'].value = 2.8e-07
+        model.parameters['bind_sCas8sCas8_C8A_kf'].value = 5.4e-08
+        model.parameters['bind_sCas9sCas9_Apop_kf'].value = 2.8e-07
 
         # Add interaction between single activation
         add_apaf_biosensor_cleavage()
