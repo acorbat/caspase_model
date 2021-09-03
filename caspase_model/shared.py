@@ -49,6 +49,12 @@ def add_apaf_biosensor_cleavage():
     cleave_dimer(Apaf(state='A'), 'bf', dimer, 'bf', 'sl', klist)
 
 
+def add_effector_bid_feedback():
+    """Add a feedback from effector caspase to bid as reported by Slee et al. (2000, doi: 10.1038/sj.cdd.4400689)."""
+    klist = [1e-6, 1e-3, 1]  # Taken from caspase 3
+    catalyze(C3(state='A'), 'bf', Bid(state='U'), 'bf', Bid(state='T'), klist)
+
+
 def observe_biosensors():
     """Add biosensors in monomeric and dimeric state as observables."""
     alias_model_components()
