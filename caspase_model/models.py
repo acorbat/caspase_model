@@ -36,10 +36,11 @@ def albeck_as_matlab():
     return model
 
 
-def corbat_2018(stimuli='extrinsic'):
+def corbat_2018(stimuli='extrinsic', add_CASPAM=True):
     """EARM model as modified by Corbat et al. (2018)."""
     model = albeck_as_matlab()
-    add_biosensors()
+    if add_CASPAM:
+        add_biosensors()
 
     alias_model_components()
 
