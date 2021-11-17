@@ -96,9 +96,6 @@ class Base(Compartment):
     k_PARP_C = Parameter(1e-2)
     k_C6_A_C8_pro = Parameter(3e-8)
 
-    # We need to override it later, and override reactions isn't implemented yet.
-    k_Bid_U_C8_A = Parameter(1e-6)
-
     # rec_to_bid
 
     # =====================
@@ -132,7 +129,7 @@ class Base(Compartment):
             self.Bid.U,
             self.C8.A & self.Bid.U,
             self.Bid.T,
-            self.k_Bid_U_C8_A,
+            self.KF,
             self.KR,
             self.KC,
         )
@@ -516,41 +513,54 @@ class Albeck11f(Albeck11e):
         KF2 = Parameter(Albeck11e.Bax.KF.value / 100)
         KF4 = Parameter(Albeck11e.Bax.KF.value / 10)
 
-
-# Overriding reactions has a bug.
-# Clearing and recreating Bax compartment reactions
-Albeck11f.Bax._reactions.clear()
-Albeck11f.Bax.add_reaction(
-    Equilibration(
-        Albeck11f.Bax.A,
-        Albeck11f.Bax.M,
-        Albeck11f.Bax.transloc_rates,
-        Albeck11f.Bax.transloc_rates,
-    )
-)
-Albeck11f.Bax.add_reaction(
-    ReversibleSynthesis(
-        Albeck11f.Bax.M,
-        Albeck11f.Bax.M,
-        Albeck11f.Bax.M2,
-        Albeck11f.Bax.KF2,
-        Albeck11f.Bax.KR,
-    ),
-    override=True,
-)
-Albeck11f.Bax.add_reaction(
-    ReversibleSynthesis(
-        Albeck11f.Bax.M2,
-        Albeck11f.Bax.M2,
-        Albeck11f.Bax.M4,
-        Albeck11f.Bax.KF4,
-        Albeck11f.Bax.KR,
-    ),
-    override=True,
-)
+        def override_reactions(self):
+            yield Equilibration(
+                self.A,
+                self.M,
+                self.transloc_rates,
+                self.transloc_rates,
+            )
+            yield Equilibration(
+                2 * self.M,
+                self.M2,
+                self.KF2,
+                self.KR,
+            )
+            yield Equilibration(
+                2 * self.M2,
+                self.M4,
+                self.KF4,
+                self.KR,
+            )
 
 
-# Collision between subcompartments
-# No overrides, only additions. To address in SimBio
-# class Albeck11fPoreTransport(Albeck11f, Albeck11ePoreTransport):
-#     pass
+class Albeck11fPoreTransport(Albeck11f):
+    k_pore = Parameter(10)
+
+    class Smac(Albeck11f.Smac):
+        M = Species(1e6, override=True)
+        KF = Parameter(2 * 1e-6 / 0.07)
+
+    class CytoC(Albeck11f.CytoC):
+        M = Species(1e6, override=True)
+        KF = Parameter(2 * 1e-6 / 0.07)
+
+    def add_reactions(self):
+        yield MichaelisMenten(
+            self.Mito.A,
+            self.Smac.M,
+            self.Mito.A & self.Smac.M,
+            self.Smac.C,
+            self.Smac.KF,
+            self.KR,
+            self.k_pore,
+        )
+        yield MichaelisMenten(
+            self.Mito.A,
+            self.CytoC.M,
+            self.Mito.A & self.CytoC.M,
+            self.CytoC.C,
+            self.CytoC.KF,
+            self.KR,
+            self.k_pore,
+        )
