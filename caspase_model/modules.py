@@ -49,7 +49,7 @@ def pore_to_parp_double_apop():
     # --------------------
     #   Apaf + cCytoC <-->  Apaf:cCytoC --> aApaf + cCytoC
     #   aApaf + pC3 <-->  aApaf:pC3 --> aApaf + C3
-    #   C3 + aApaf <-->  C3:aApaf --> Apop
+    #   C3 + aApaf <-->  C3:aApaf --> Apop + C3
     #   Apop + pC3 <-->  Apop:pC3 --> Apop + C3
 
     catalyze(CytoC(state="A"), Apaf(state="I"), Apaf(state="A"), [5e-7, KR, KC])

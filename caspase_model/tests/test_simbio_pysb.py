@@ -6,7 +6,8 @@ from pysb.simulator import ScipyOdeSimulator
 from simbio import Simulator
 from simbio.simulator.solvers.scipy import ODEint
 
-from caspase_model.simbio_model import albeck
+from caspase_model.models import albeck_as_matlab, arm, corbat_2018
+from caspase_model.simbio_model import albeck, corbat
 from caspase_model.tests.name_mapping import name_mapping
 
 
@@ -63,6 +64,11 @@ MODELS = [
         albeck.Albeck11fPoreTransport,
         load_pysb_model(albeck_modules.albeck_11f, pore=True),
     ),
+    (corbat.AlbeckAsMatlab, albeck_as_matlab()),
+    (corbat.Corbat2018_extrinsic, corbat_2018(stimuli="extrinsic")),
+    (corbat.Corbat2018_intrinsic, corbat_2018(stimuli="intrinsic")),
+    (corbat.ARM_extrinsic, arm(stimuli="extrinsic")),
+    (corbat.ARM_intrinsic, arm(stimuli="intrinsic")),
 ]
 
 
