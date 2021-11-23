@@ -1,0 +1,12 @@
+name: arm
+channels:
+  - conda-forge
+dependencies:
+  - alubbock::pysb
+  - sympy<1.9
+  - perl
+  - numba
+  - pip
+  - pip:
+    - git+https://github.com/acorbat/earm
+    - git+https://github.com/hgrecco/simbio
