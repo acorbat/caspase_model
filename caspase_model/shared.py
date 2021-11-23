@@ -69,6 +69,23 @@ def observe_biosensors():
                    match='species')
 
 
+def observe_caspases():
+    """Add caspases in inactive and active state as observables."""
+    alias_model_components()
+    caspase_dict = {'Cas3': C3,
+                   'Cas8': C8,
+                   'Cas6': C6}
+
+    for caspase_name, caspase in caspase_dict.items():
+        Observable(caspase_name + '_inactive', caspase(state='pro'))
+        Observable(caspase_name + '_active', caspase(state='A'))
+
+    Observable('Cas9_inactive', C9)
+    Observable('Apaf_inactive', Apaf(state='I'))
+    Observable('Apaf_active', Apaf(state='A'))
+    Observable('Apop_active', Apop)
+
+
 def remove_extrinsic_stimuli(model):
     """Sets ligand to 0 to remove extrinsic stimuli."""
     model.parameters['L_0'].value = 0
