@@ -25,9 +25,11 @@ class AlbeckAsMatlab(Albeck11ePoreTransport):
         )
 
 
-class Corbat2018_extrinsic(AlbeckAsMatlab):
+class Corbat2018(AlbeckAsMatlab):
+    L = Species(0, override=True)  # Set extrinsic stimuli to 0
+    IntrinsicStimuli = Species(0)  # Add intrinsic stimuli
+
     XIAP = Species(1e2, override=True)
-    L = Species(1e3, override=True)
     R = Species(1e3, override=True)
 
     class Sensor(Compartment):
@@ -79,13 +81,6 @@ class Corbat2018_extrinsic(AlbeckAsMatlab):
             self.Sensor.kr_sCas8,
             self.Sensor.kc_sCas8,
         )
-
-
-class Corbat2018_intrinsic(Corbat2018_extrinsic):
-    L = Species(0, override=True)  # Remove extrinsic stimuli
-    IntrinsicStimuli = Species(1e2)
-
-    def add_reactions(self):
         yield MichaelisMenten(
             self.IntrinsicStimuli,
             self.Bid.U,
@@ -97,8 +92,17 @@ class Corbat2018_intrinsic(Corbat2018_extrinsic):
         )
 
 
-class ARM_extrinsic(AlbeckAsMatlab):
+class Corbat2018_extrinsic(Corbat2018):
     L = Species(1e3, override=True)
+
+
+class Corbat2018_intrinsic(Corbat2018):
+    IntrinsicStimuli = Species(1e2, override=True)
+
+
+class ARM(AlbeckAsMatlab):
+    L = Species(0, override=True)  # Set extrinsic stimuli to 0
+    IntrinsicStimuli = Species(0)  # Add intrinsic stimuli
 
     class Smac(AlbeckAsMatlab.Smac):
         M = Species(1e5, override=True)
@@ -205,6 +209,16 @@ class ARM_extrinsic(AlbeckAsMatlab):
             self.Sensor.kc_sCas9,
         )
 
+        yield MichaelisMenten(
+            self.IntrinsicStimuli,
+            self.Bid.U,
+            self.IntrinsicStimuli & self.Bid.U,
+            self.Bid.T,
+            self.KF,
+            self.KR,
+            self.KC,
+        )
+
     @classmethod
     def _reactions_to_remove(self):
         #   aApaf + pC9 <-->  Apop
@@ -216,22 +230,14 @@ class ARM_extrinsic(AlbeckAsMatlab):
 
 
 # Remove some ARM reactions
-for reaction in ARM_extrinsic._reactions_to_remove():
+for reaction in ARM._reactions_to_remove():
     for single_reaction in reaction.single_reactions():
-        del ARM_extrinsic._reactions[single_reaction.reaction_balance()]
+        del ARM._reactions[single_reaction.reaction_balance()]
 
 
-class ARM_intrinsic(ARM_extrinsic):
-    L = Species(0, override=True)  # Remove extrinsic stimuli
-    IntrinsicStimuli = Species(1e2)
+class ARM_extrinsic(ARM):
+    L = Species(1e3, override=True)
 
-    def add_reactions(self):
-        yield MichaelisMenten(
-            self.IntrinsicStimuli,
-            self.Bid.U,
-            self.IntrinsicStimuli & self.Bid.U,
-            self.Bid.T,
-            self.KF,
-            self.KR,
-            self.KC,
-        )
+
+class ARM_intrinsic(ARM):
+    IntrinsicStimuli = Species(1e2, override=True)
