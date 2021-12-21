@@ -183,3 +183,28 @@ class Extrinsic(Base.Extrinsic):
         yield ReversibleSynthesis(
             self.BAR, self.C8.A, self.BAR & self.C8.A, self.KF, self.KR
         )
+
+
+class Effector(Base.Effector):
+    """Effector module.
+
+    Reactions:
+        - PARP.U + C3 <> PARP.U : C3 > PARP.C + C3
+    """
+
+    k_PARP_C = Parameter(1e-2)
+
+    class PARP(Compartment):
+        U = Species(1e6)
+        C = Species(0)
+
+    def add_reactions(self):
+        yield MichaelisMenten(
+            self.C3.A,
+            self.PARP.U,
+            self.C3.A & self.PARP.U,
+            self.PARP.C,
+            self.KF,
+            self.k_PARP_C,
+            self.KC,
+        )
