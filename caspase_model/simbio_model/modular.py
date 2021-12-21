@@ -185,6 +185,25 @@ class Extrinsic(Base.Extrinsic):
         )
 
 
+class Intrinsic(Base.Intrinsic):
+    """Intrisic module.
+
+    Reactions:
+        - Apaf.A + C9 <> Apop
+        - XIAP + Apop <--> XIAP + Apop
+    """
+
+    k_Apop = Parameter(5e-8)
+    k_Apop_XIAP = Parameter(2e-6)
+    C9 = Species(1e5)
+
+    def add_reactions(self):
+        yield ReversibleSynthesis(self.Apaf.A, self.C9, self.Apop, self.k_Apop, self.KR)
+        yield ReversibleSynthesis(
+            self.XIAP, self.Apop, self.XIAP & self.Apop, self.k_Apop_XIAP, self.KR
+        )
+
+
 class Effector(Base.Effector):
     """Effector module.
 
