@@ -227,3 +227,64 @@ class Effector(Base.Effector):
             self.k_PARP_C,
             self.KC,
         )
+
+
+class FeedbackC6(Base):
+    """Feedback from C3 to C8 through C6
+
+    Reactions:
+        - C6.pro + C3.A <> C6.pro : C3.A > C6.A + C3.A
+        - C8.pro + C6.A <> C8.pro : C6.A > C8.A + C6.A
+    """
+
+    k_C6_A_C8_pro = Parameter(3e-8)
+
+    class C6(Compartment):
+        pro = Species(1e4)
+        A = Species(0)
+
+    def add_reactions(self):
+        yield MichaelisMenten(
+            self.Effector.C3.A,
+            self.C6.pro,
+            self.Effector.C3.A & self.C6.pro,
+            self.C6.A,
+            self.KF,
+            self.KR,
+            self.KC,
+        )
+        yield MichaelisMenten(
+            self.C6.A,
+            self.Extrinsic.C8.pro,
+            self.C6.A & self.Extrinsic.C8.pro,
+            self.Extrinsic.C8.A,
+            self.k_C6_A_C8_pro,
+            self.KR,
+            self.KC,
+        )
+
+
+class UbiquitinC3(Base):
+    """ubiquitylation of C3.A by XIAP.
+
+    Reactions:
+        - XIAP + C3.A <> XIAP : C3.A > XIAP + C3.ub
+    """
+
+    k_C3_A_XIAP = Parameter(2e-6)
+    k_C3_ub = Parameter(1e-1)
+
+    class Effector(Base.Effector):
+        class C3(Base.Effector.C3):
+            ub = Species(0)
+
+    def add_reactions(self):
+        yield MichaelisMenten(
+            self.Intrinsic.XIAP,
+            self.Effector.C3.A,
+            self.Intrinsic.XIAP & self.Effector.C3.A,
+            self.Effector.C3.ub,
+            self.k_C3_A_XIAP,
+            self.KR,
+            self.k_C3_ub,
+        )
