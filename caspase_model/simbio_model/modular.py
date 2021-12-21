@@ -1,5 +1,5 @@
 from simbio import Compartment, Parameter, Species
-from simbio.reactions import MichaelisMenten, ReversibleSynthesis
+from simbio.reactions import CatalyzeConvert, MichaelisMenten, ReversibleSynthesis
 
 
 class Base(Compartment):
@@ -137,4 +137,49 @@ class Base(Compartment):
             self.k_C3_pro_C8_A,
             self.KR,
             self.KC,
+        )
+
+
+class Extrinsic(Base.Extrinsic):
+    """Extrinsic module.
+
+    Reactions:
+        - L + R <--> L:R --> DISC
+        - pC8 + DISC <--> DISC:pC8 --> C8 + DISC
+        - flip + DISC <-->  flip:DISC
+        - C8 + BAR <--> BAR:C8
+    """
+
+    k_L_R = Parameter(4e-7)
+    k_DISC = Parameter(1e-5)
+
+    R = Species(200)
+    DISC = Species(0)
+    flip = Species(100)
+    BAR = Species(1e3)
+
+    def add_reactions(self):
+        yield CatalyzeConvert(
+            self.L,
+            self.R,
+            self.L & self.R,
+            self.DISC,
+            self.k_L_R,
+            self.KR,
+            self.k_DISC,
+        )
+        yield MichaelisMenten(
+            self.DISC,
+            self.C8.pro,
+            self.DISC & self.C8.pro,
+            self.C8.A,
+            self.KF,
+            self.KR,
+            self.KC,
+        )
+        yield ReversibleSynthesis(
+            self.DISC, self.flip, self.DISC & self.flip, self.KF, self.KR
+        )
+        yield ReversibleSynthesis(
+            self.BAR, self.C8.A, self.BAR & self.C8.A, self.KF, self.KR
         )
