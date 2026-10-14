@@ -31,7 +31,7 @@ dependencies = { poincare = ">=1.2" }
 pypi-dependencies = { simbio = ">=1.2" }
 
 [feature.lint]
-dependencies = { prek = "*", tombi = "*", ruff = "*", mdformat = "*" }
+dependencies = { prek = "*", tombi = "*", ruff = "*", mdformat = "*", ty = "*" }
 tasks = { lint = "prek run --all-files" }
 
 [feature.test]

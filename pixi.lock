@@ -73,6 +73,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h1df4ec4_4.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tombi-1.8.4-hf19af3b_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tornado-6.5.10-py312h5cc1888_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/ty-0.0.87-h39d0f39_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/wcwidth-0.9.2-py311hd139983_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/wrapt-2.5.0-py312h1b36aeb_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zeromq-4.3.5-h901266b_12.conda
@@ -246,6 +247,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/tk-8.6.13-hbeba79b_4.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/tombi-1.8.4-hc2d82ec_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/tornado-6.5.10-py312ha053593_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/osx-arm64/ty-0.0.87-h9d00c72_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/wcwidth-0.9.2-py311h1f16292_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/wrapt-2.5.0-py312hbd136b4_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zeromq-4.3.5-h6eb0046_12.conda
@@ -352,6 +354,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/win-64/tk-8.6.13-h967ab96_4.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/tombi-1.8.4-h18a1a76_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/tornado-6.5.10-py312he06e257_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/win-64/ty-0.0.87-h2852063_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/ucrt-10.0.26100.0-h57928b3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/vc-14.5-ha367084_41.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/vc14_runtime-14.51.36247-habf1de7_41.conda
@@ -2389,6 +2392,20 @@ packages:
   run_exports: {}
   size: 950218
   timestamp: 1789911064461
+- conda: https://conda.anaconda.org/conda-forge/linux-64/ty-0.0.87-h39d0f39_0.conda
+  sha256: 555ab3ee3ff05535b9cb9618f7cee31a6958978cef6fff30dfe260e42fb5ef53
+  md5: 4ed32e97b397696606a0b91242119bf0
+  depends:
+  - libgcc >=15
+  - __glibc >=2.17,<3.0.a0
+  constrains:
+  - __glibc >=2.17
+  license: MIT
+  purls:
+  - pkg:pypi/ty?source=compressed-mapping
+  run_exports: {}
+  size: 12878295
+  timestamp: 1791937826710
 - conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.13.1-h535ca38_0.conda
   sha256: c91f061e5a995d04a106477310be306a62bdb304b4c268b38830d24330d96b87
   md5: 8ba559132729faf35ae2261250b49e03
@@ -4875,6 +4892,18 @@ packages:
   run_exports: {}
   size: 952431
   timestamp: 1789911042938
+- conda: https://conda.anaconda.org/conda-forge/osx-arm64/ty-0.0.87-h9d00c72_0.conda
+  sha256: 492c381c5e71550661a0a35e0ae342299cc4f9f5383bbbe0e3bf9023745ec4d6
+  md5: ad696241845010ef5b09e97464ecf9ce
+  depends:
+  - __osx >=11.0
+  constrains:
+  - __osx >=11.0
+  license: MIT
+  purls: []
+  run_exports: {}
+  size: 11633096
+  timestamp: 1791937831487
 - conda: https://conda.anaconda.org/conda-forge/osx-arm64/uv-0.13.1-hfc06f74_0.conda
   sha256: ba39cd06cf669854f49dd3a03ab20164f7f83d093c2d63dc714c3ff9e4de969b
   md5: 5512e01ac3bf6e737f354092db6cb379
@@ -6164,6 +6193,18 @@ packages:
   run_exports: {}
   size: 954730
   timestamp: 1789911140961
+- conda: https://conda.anaconda.org/conda-forge/win-64/ty-0.0.87-h2852063_0.conda
+  sha256: f39c1269fbb670fb0bbc61a93554ba060826bd52ae27184ab017bcec65c93aca
+  md5: cbc4921eba541a5dcd17bc452b466f8d
+  depends:
+  - vc >=14.3,<15
+  - vc14_runtime >=14.44.35208
+  - ucrt >=10.0.20348.0
+  license: MIT
+  purls: []
+  run_exports: {}
+  size: 12452184
+  timestamp: 1791937801013
 - conda: https://conda.anaconda.org/conda-forge/win-64/ucrt-10.0.26100.0-h57928b3_0.conda
   sha256: 3005729dce6f3d3f5ec91dfc49fc75a0095f9cd23bab49efb899657297ac91a5
   md5: 71b24316859acd00bdb8b38f5e2ce328

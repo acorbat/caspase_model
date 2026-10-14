@@ -42,3 +42,11 @@ docstring-code-format = true
 
 [tool.tombi]
 toml-version = "v1.1.0"
+
+[tool.ty.environment]
+# pixi's environment is a conda prefix, which ty does not detect from VIRTUAL_ENV
+python = ".pixi/envs/default"
+
+[tool.ty.src]
+# The PySB code declares components through star imports and self-exporting macros.
+include = ["src/caspase_model/simbio_model"]
