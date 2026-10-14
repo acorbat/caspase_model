@@ -73,6 +73,20 @@ extrinsic_result = Simulator(ARM).solve(save_at=range(0, 20_000, 100))
 intrinsic_result = Simulator(intrinsic(ARM)).solve(save_at=range(0, 20_000, 100))
 ```
 
+Observables summing each caspase state over all its complexes,
+as `caspase_model.shared.observe_caspases` does for PySB,
+are available as simulation outputs:
+
+```python
+from caspase_model.simbio_model import observables
+
+result = (
+    Simulator(ARM)
+    .with_transform(observables(ARM))
+    .solve(save_at=range(0, 20_000, 100))
+)
+```
+
 ## References
 
 <a name="Albeck2008">Albeck2008</a>: [Albeck JG, Burke JM, Spencer SL, Lauffenburger DA, Sorger PK (2008) Modeling a Snap-Action, Variable-Delay Switch Controlling Extrinsic Cell Death. PLOS Biology 6(12): e299.](https://doi.org/10.1371/journal.pbio.0060299)

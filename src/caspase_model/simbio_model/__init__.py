@@ -14,6 +14,7 @@ from .models import (
     Corbat2018,
     intrinsic,
 )
+from .observables import observables
 
 __all__ = [
     "ARM",
@@ -25,4 +26,5 @@ __all__ = [
     "AlbeckAsMatlab",
     "Corbat2018",
     "intrinsic",
+    "observables",
 ]
