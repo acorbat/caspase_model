@@ -1,8 +1,44 @@
+[project]
+name = "caspase-model"
+version = "0.1.0"
+description = "Caspase model modified at Grecco Lab."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Agustín Corbat", email = "acorbat@df.uba.ar" }]
+keywords = ["apoptosis", "caspase", "pysb", "simbio", "systems biology"]
+classifiers = [
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+[project.urls]
+homepage = "https://github.com/acorbat/caspase_model"
+issues = "https://github.com/acorbat/caspase_model/issues"
+
+[project.optional-dependencies]
+pysb = ["pysb", "earm @ git+https://github.com/acorbat/earm"]
+simbio = ["simbio>=1.2"]
+
 [build-system]
-requires = ["setuptools", "wheel", "setuptools_scm[toml]"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.9"]
+build-backend = "uv_build"
 
-[tool.setuptools_scm]
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib --doctest-modules"
+filterwarnings = ["ignore::pysb.core.ModelExistsWarning"]
+testpaths = ["src", "tests"]
 
-[tool.isort]
-profile = "black"
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.ruff.lint.per-file-ignores]
+# PySB declares components through star imports and self-exporting macros.
+"src/caspase_model/{macros,models,modules,shared}.py" = ["F403", "F405"]
+"tests/name_mapping.py" = ["E501"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.tombi]
+toml-version = "v1.1.0"

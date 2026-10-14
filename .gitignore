@@ -1,12 +1,8 @@
-# All hidden files. Use "git --force add" if necessary.
 .*
 
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+!.gitignore
+!.gitattributes
+!.github/
 
-# Packaging
-*.egg*
-build/
-dist/
+*.py[cod]
+__pycache__

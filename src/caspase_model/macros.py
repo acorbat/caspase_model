@@ -64,19 +64,19 @@ def cleave_complex(enzyme, e_site, substrate, s_site, product, klist, m1=None, m
         # monomer for binding (m1) hasn't been specified.
         if len(specsitesdict) > 1 and m1 is None:
             raise ValueError(
-                f"Binding site {site1} present in more than one monomer in complex {s1}."  # noqa: E501
+                f"Binding site {site1} present in more than one monomer in complex {s1}."
                 "Specify variable m1, the monomer used for binding within the complex."
             )
         if not s1.is_concrete:
-            raise ValueError("Complex '%s' must be concrete." % (s1))
+            raise ValueError(f"Complex '{s1}' must be concrete.")
             # If the given binding site is only present in one monomer in the complex:
         if m1 is None:
             # Build up ComplexPattern for use in rule
             # (with state of given binding site specified).
-            s1complexpatub = list(specsitesdict.keys())[0]({site1: None})
-            s1complexpatb = list(specsitesdict.keys())[0]({site1: 50})
+            s1complexpatub = next(iter(specsitesdict))({site1: None})
+            s1complexpatb = next(iter(specsitesdict))({site1: 50})
             for monomer in s1.monomer_patterns:
-                if monomer not in specsitesdict.keys():
+                if monomer not in specsitesdict:
                     s1complexpatub %= monomer
                     s1complexpatb %= monomer
 
@@ -114,8 +114,8 @@ def cleave_complex(enzyme, e_site, substrate, s_site, product, klist, m1=None, m
         return s1complexpatub, s1complexpatb
 
     # If no complexes exist in the reaction, revert to catalyze().
-    if (isinstance(enzyme, MonomerPattern) or isinstance(enzyme, Monomer)) and (
-        isinstance(substrate, MonomerPattern) or isinstance(substrate, Monomer)
+    if isinstance(enzyme, MonomerPattern | Monomer) and (
+        isinstance(substrate, MonomerPattern | Monomer)
     ):
         _verify_sites(enzyme, e_site)
         _verify_sites(substrate, s_site)
@@ -135,7 +135,7 @@ def cleave_complex(enzyme, e_site, substrate, s_site, product, klist, m1=None, m
         enzymepatb, enzyme_free = enzyme({e_site: 50}), enzyme({e_site: None})
 
     if isinstance(substrate, ComplexPattern):
-        substratepatb, substratepatub = build_complex(substrate, s_site, m2)
+        substratepatb, _ = build_complex(substrate, s_site, m2)
     else:
         substratepatb = substrate({s_site: 50})
 
@@ -194,7 +194,7 @@ def cleave_dimer(enzyme, e_site, substrate, s_site, c_site, klist):
     """
     # Decompose substrate to generate products
     if not isinstance(substrate, ComplexPattern):
-        raise ValueError("Substrate is not a ComplexPattern")
+        raise ValueError("Substrate is not a ComplexPattern")  # noqa: TRY004
 
     # If substrate is homodimer, choose the first one as binding site to enzyme
     substrate_composition = substrate.monomer_patterns

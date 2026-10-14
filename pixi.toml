@@ -1,0 +1,39 @@
+[workspace]
+channels = ["conda-forge", "alubbock"]
+platforms = ["linux-64", "osx-arm64", "win-64"]
+preview = ["pixi-build"]
+
+[package.build]
+backend = { name = "pixi-build-python", version = "*" }
+config = { ignore-pypi-mapping = false }  # Enable automatic PyPI-to-conda mapping
+
+[environments]
+default = ["py312", "pysb", "simbio", "test", "lint"]
+py313 = ["py313", "pysb", "simbio", "test"]
+py314 = ["py314", "pysb", "simbio", "test"]
+
+[dependencies]
+caspase-model = { path = "." }
+ipykernel = "*"
+
+[feature]
+py312.dependencies = { python = "3.12.*" }
+py313.dependencies = { python = "3.13.*" }
+py314.dependencies = { python = "3.14.*" }
+
+[feature.pysb]
+# PySB and BioNetGen are distributed in the alubbock channel.
+dependencies = { pysb = { version = "*", channel = "alubbock" }, perl = "*", scipy = "*" }
+pypi-dependencies = { earm = { git = "https://github.com/acorbat/earm" } }
+
+[feature.simbio]
+dependencies = { poincare = ">=1.2" }
+pypi-dependencies = { simbio = ">=1.2" }
+
+[feature.lint]
+dependencies = { prek = "*", tombi = "*", ruff = "*", mdformat = "*" }
+tasks = { lint = "prek run --all-files" }
+
+[feature.test]
+dependencies = { pytest = "*", pytest-xdist = "*", pandas = "*" }
+tasks = { test = "pytest -n auto" }
